@@ -58,9 +58,10 @@ func loadConfig(p string) (*Config, error) {
 	if err := json.Unmarshal(b, c); err != nil {
 		return nil, err
 	}
-	if c.Listen == "" || c.DB == "" || c.Invite == "" {
-		return nil, errors.New("config missing listen/db/invite")
+	if c.Listen == "" || c.DB == "" {
+		return nil, errors.New("config missing listen/db")
 	}
+	// Invite 允许为空：表示开放注册（不校验邀请码）
 	if c.MsgQuotaMB <= 0 {
 		c.MsgQuotaMB = defMsgQuotaMB
 	}
@@ -228,7 +229,9 @@ func hRegister(w http.ResponseWriter, r *http.Request) {
 		httpError(w, 400, "bad json")
 		return
 	}
-	if q.Invite != cfg.Invite {
+	// 邀请码可选：config.json 的 invite 为空串时跳过校验（开放注册）。
+	// 客户端已移除邀请码输入框，配套把服务端校验改为可关闭。
+	if cfg.Invite != "" && q.Invite != cfg.Invite {
 		httpError(w, 403, "bad invite")
 		return
 	}
