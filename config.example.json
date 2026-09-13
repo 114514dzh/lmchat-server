@@ -1,0 +1,10 @@
+{
+  "listen": "127.0.0.1:8420",
+  "db": "/opt/imserver/data/im.db",
+  "invite": "CHANGE_ME_邀请码",
+  "msg_ttl_days": 30,
+  "blob_ttl_days": 30,
+  "blob_quota_mb": 300,
+  "msg_quota_mb": 200,
+  "msg_quota_count": 20000
+}

@@ -1,0 +1,10 @@
+# 编译产物：由 go build 生成，不入库
+imserver
+# 运行时数据：数据库（含用户数据、消息）
+data/
+# 各类临时备份
+*.bak
+*.old
+*~
+# 真实配置含邀请码（IM 准入凭证），不入库；用 config.example.json 作模板
+config.json
